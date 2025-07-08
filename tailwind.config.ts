@@ -1,5 +1,6 @@
 // tailwind.config.js
 
+import lineClamp from '@tailwindcss/line-clamp';
 
 export default {
     theme: {
@@ -12,4 +13,7 @@ export default {
             },
         },
     },
+    plugins: [
+        lineClamp, // 👈 thêm dòng này vào đây
+    ],
 }

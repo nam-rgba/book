@@ -2,44 +2,98 @@ import { useState } from "react";
 
 import Logo from "../assets/logo.png";
 import Banner from "../assets/banner.png";
+import SuccessAnimation from "../components/SuccessAnimation";
 
-import { Input, Tooltip } from "antd";
-import { FcGoogle } from "react-icons/fc";
+import { Input, Tooltip, Modal } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
+import { FcGoogle } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 import useLocalStorage from "../hooks/useLocalStorage";
-import login from "../auth/login"; // Assuming you have a login function in utils
+import useCookie from "../hooks/useCookie";
+import login from "../auth/login";
+import getProfile from "../auth/getProfile"
+import { userStore } from "../store/user.mobx";
+
 
 const Login = () => {
   // Using local storage to manage language preference
   const [language, setLanguage] = useLocalStorage<string>("language", "vi");
-
+  // use cookie
+  const { setCookie } = useCookie("access_token");
   //   State for phone and password
   const [phone, setphone] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
+
   //   state for login
   const [loginError, setLoginError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
+  
+
+  const navigate = useNavigate();
 
   // Handle Login function
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoginError(""); 
+    setLoginError("");
     setIsLoading(true);
-    login(phone, password)
-      .then(() => {
-        // Handle successful login, e.g., redirect to home page
-        setIsLoading(false);
-      })
-      .catch((error) => {
+
+    try {
+      const response = await login(phone, password);
+      setIsLoading(false);
+      setCookie( response.token, 7); // Set cookie for 7 days
+      // get p5
+      const userProfile = await getProfile(response.token)
+      userStore.setUser(userProfile); 
+
+      setIsSuccess(true);
+      console.log("Login successful:", response.token);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         setLoginError(error.message);
-        setIsLoading(false);
-      });
+      } else {
+        setLoginError("Login failed. Please try again.");
+      }
+      setIsLoading(false);
+    }
   };
+
+
+
+  // Handle when success login, modal up and redirect to home page
+  if (isSuccess) {
+    setTimeout(() => {
+      navigate("/");
+    }, 3000); // Redirect after 1 second
+  }
+
+
 
   return (
     <div className="w-full h-screen flex flex-row   ">
+
+      {/* Modal if success login */}
+      <Modal
+        open={isSuccess}
+        title={language === "vi" ? "Đăng nhập thành công" : "Login Successful"}
+        footer={null}
+        centered
+        closable={false}
+      >
+        <div className="text-center">
+
+          <SuccessAnimation size={100} duration={1} className="mx-auto mb-4" />
+          <p className="text-lg">
+            {language === "vi"
+              ? "Bạn sẽ đến trang chủ sau giây lát."
+              : " We will redirect you to the home page."}
+          </p>
+        </div>
+      </Modal>
+
+      {/* Banner section */}
       <div className="w-[60%] h-full bg-[#eff5ff] flex flex-col items-center justify-center relative">
         <div className="w-[131px] h-[44px] top-[64px] left-[64px] absolute">
           <img src={Logo} alt="logo" className="w-full" />
@@ -51,7 +105,6 @@ const Login = () => {
       </div>
 
       {/* Login section */}
-
       <div className="w-[40%] h-full bg-[#fff] flex items-center justify-center py-16 px-16">
         {/* after padding */}
         <div className=" h-full w-full flex flex-col gap-6 justify-between ">
@@ -185,7 +238,7 @@ const Login = () => {
             {loginError && (
               <div className="text-red-600 text-center">
                 <span className="text-[16px] font-bold">
-                 {loginError  || "Login failed. Please try again."}
+                  {loginError || "Login failed. Please try again."}
                 </span>
               </div>
             )}

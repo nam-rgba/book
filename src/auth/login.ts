@@ -1,6 +1,10 @@
 import axios from "axios"
 
-const login = async (phone: string, password: string): Promise<void> => {
+interface LoginResponse {
+    token: string;
+}
+
+const login = async (phone: string, password: string): Promise<LoginResponse> => {
 
     const API_URL = 'https://shop.staging.bmdapp.store:3249/v1/customer/auth/login';
     try {
@@ -10,11 +14,10 @@ const login = async (phone: string, password: string): Promise<void> => {
         }, {
             headers: {
                 'namespace': 'hoangphuc'
-                // Add any other headers you need, like Authorization if required
             }
         });
 
-        return response.data; // Assuming the API returns some data on successful login
+        return response.data.data; // Assuming the response contains a data field with the user information
     } catch (error) {
         // Handle error, e.g., show error message to user
         console.error('Login failed:', error);
