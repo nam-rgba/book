@@ -7,7 +7,7 @@ import SuccessAnimation from "../components/SuccessAnimation";
 import { Input, Tooltip, Modal } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 import { FcGoogle } from "react-icons/fc";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 import useCookie from "../hooks/useCookie";
@@ -43,9 +43,9 @@ const Login = () => {
     try {
       const response = await login(phone, password);
       setIsLoading(false);
-      setCookie( response.token, 7); // Set cookie for 7 days
+       setCookie( response.token, 7); // Set cookie for 7 days
       // get p5
-      const userProfile = await getProfile(response.token)
+      const userProfile = await getProfile(response.token);
       userStore.setUser(userProfile); 
 
       setIsSuccess(true);
@@ -66,7 +66,7 @@ const Login = () => {
   if (isSuccess) {
     setTimeout(() => {
       navigate("/");
-    }, 3000); // Redirect after 1 second
+    }, 1600); // Redirect after 1 second
   }
 
 
@@ -126,7 +126,7 @@ const Login = () => {
           </div>
 
           {/* main */}
-          <div className="w-[460px] h-[500px] bg-white flex flex-col gap-6">
+          <div className="w-full  bg-white flex flex-col gap-6 px-10">
             {/* welcome */}
             <div className="text-left h-9 flex flex-col items-start justify-center gap-2 mb-4">
               <div className="font-semibold font-sans text-[30px] text-[##2A3547] leading-[120%]">
@@ -145,8 +145,8 @@ const Login = () => {
 
             {/* form */}
             {/* button login google */}
-            <div className="w-full h-[50px] flex items-center justify-center">
-              <button className="w-full h-full shadow-[1px_0px_4px_0px_rgba(0,_0,_0,_0.1)]  text-[#344054] rounded-md font-semibold text-[16px] flex flex-row items-center justify-center gap-2">
+            <div className="w-full  flex items-center justify-center">
+              <button className="w-full h-[50px] shadow-[1px_0px_4px_0px_rgba(0,_0,_0,_0.1)]  text-[#344054] rounded-md font-semibold text-[16px] flex flex-row items-center justify-center gap-2">
                 {language === "vi"
                   ? "Đăng nhập bằng Google"
                   : "Login with Google"}
@@ -263,9 +263,9 @@ const Login = () => {
                 {language === "vi"
                   ? "Chưa có tài khoản? "
                   : "Don't have an account? "}
-                <span className="text-[#1A73E8]">
+                <Link to="/register" className="text-[#1A73E8]">
                   {language === "vi" ? "Tạo tài khoản ngay" : "Create account"}
-                </span>
+                </Link>
               </span>
             </div>
           </div>

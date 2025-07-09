@@ -14,6 +14,9 @@ import { observer } from "mobx-react-lite";
 import { userStore } from "../store/user.mobx";
 import CartDropdown from "./Cart";
 import { cartStore } from "../store/cart.mobx";
+import logout from "../auth/logout";
+import logo from "../assets/landing/logo.jfif"; 
+import {Modal} from "antd";
 
 interface HeaderProps {
   wishlistCount?: number;
@@ -25,10 +28,11 @@ interface HeaderProps {
 // Sample cart items for demonstration
 
 const Header = observer(
-  ({ wishlistCount = 0, onLogout }: HeaderProps) => {
+  ({ wishlistCount = 0 }: HeaderProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const handleSearch = (e: React.FormEvent) => {
@@ -44,9 +48,9 @@ const Header = observer(
     };
 
     const handleLogout = () => {
-      if (onLogout) {
-        onLogout();
-      }
+      setIsModalOpen(false);
+      logout();
+      userStore.clearUser();
       navigate("/");
     };
 
@@ -69,14 +73,25 @@ const Header = observer(
 
     return (
       <header className="bg-white shadow-md sticky top-0 z-50">
+        <Modal
+          title="Logout Confirmation"
+          open={isModalOpen}
+          onOk={handleLogout}
+          onCancel={() => setIsModalOpen(false)}
+          okType="danger"
+          okText="Logout"
+          cancelText="Cancel"
+        />
         {/* Main header */}
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-gray-900 hidden sm:block">
-                BMD Shop
-              </span>
+              <img
+                src={logo}
+                alt="Logo"
+                className="h-12 w-12 object-cover rounded-lg overflow-hidden"
+              />
             </Link>
 
             {/* Search bar - Desktop */}
@@ -87,11 +102,11 @@ const Header = observer(
                   placeholder="Search products..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-[999px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
                 <button
                   type="submit"
-                  className="px-2 py-2 bg-blue-400 text-white rounded-r-lg hover:bg-blue-500 transition-colors duration-200"
+                  className="px-4 py-2 bg-blue-400 text-white rounded-r-[999px] hover:bg-blue-500 transition-colors duration-200"
                 >
                   <FaSearch />
                 </button>
@@ -177,8 +192,8 @@ const Header = observer(
                             Settings
                           </Link>
                           <button
-                            onClick={handleLogout}
-                            className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                            onClick={()=> setIsModalOpen(true)}
+                            className="block w-full text-left px-4 py-2 text-sm text-red-500 hover:bg-gray-100"
                           >
                             Logout
                           </button>
@@ -272,7 +287,7 @@ const Header = observer(
               </Link>
               <Link
                 to="/deals"
-                className="text-red-600 hover:text-red-700 font-medium transition-colors"
+                className="text-red-600 hover:text-white hover:bg-[#ef5a60] p-4 font-medium transition-colors"
               >
                 Special Deals
               </Link>
@@ -297,28 +312,28 @@ const Header = observer(
                     All Products
                   </Link>
                   <Link
-                    to="/categories/electronics"
+                    to="/products"
                     className="text-gray-700 hover:text-blue-600 font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sách đang sale
                   </Link>
                   <Link
-                    to="/categories/clothing"
+                    to="/products"
                     className="text-gray-700 hover:text-blue-600 font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sách giáo khoa
                   </Link>
                   <Link
-                    to="/categories/home"
+                    to="/products"
                     className="text-gray-700 hover:text-blue-600 font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Sách kinh điển
                   </Link>
                   <Link
-                    to="/categories/sports"
+                    to="/products"
                     className="text-gray-700 hover:text-blue-600 font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
@@ -326,7 +341,7 @@ const Header = observer(
                   </Link>
                   <Link
                     to="/deals"
-                    className="text-red-600 hover:text-red-700 font-medium py-2"
+                    className="text-red-600 hover:text-white hover:bg-[#ef5a60] font-medium py-2"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     Special Deals

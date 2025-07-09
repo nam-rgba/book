@@ -3,7 +3,6 @@ import axios from "axios";
 
 import { filterProducts } from "../utils/filtTypeProduct";
 import type { ProductCardProps } from "../utils/filtTypeProduct";
-import {toVND} from "../utils/toVND";
 
 import Card from "./Card";
 
@@ -19,7 +18,7 @@ const Outstanding = () => {
         const response = await axios.get(API_URL, {
           params: {
             page: 1,
-            limit: 8,
+            limit: 12,
           },
           headers: {
             "namespace": "hoangphuc",
@@ -49,7 +48,7 @@ const Outstanding = () => {
                     name={product.name}
                     image={product.image}
                     sold={product.sold}
-                    price={toVND(product.price)}
+                    price={product.price}
                 />
             ))}
         </div>

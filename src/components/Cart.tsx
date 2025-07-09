@@ -150,7 +150,7 @@ const CartDropdown = observer(
               View Cart
             </Link>
             <Link
-              to="/checkout"
+              to="/order/cart-confirm"
               className="flex-1 px-3 py-2 text-center text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
             >
               Checkout

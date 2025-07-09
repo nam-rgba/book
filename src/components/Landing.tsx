@@ -120,7 +120,7 @@ const Landing = () => {
             {/* Content Overlay */}
             <div className="relative z-10 h-full flex flex-col sm:flex-row items-center justify-center sm:justify-around px-4 sm:px-8 lg:px-16">
               {/* Text Content */}
-              <div className="text-center sm:text-left text-white sm:text-[#5A6A85] max-w-full sm:max-w-2xl lg:max-w-4xl mb-8 sm:mb-0">
+              <div className="text-center w-[60%] pl-38 px-8 sm:text-left text-white sm:text-[#5A6A85] max-w-full sm:max-w-2xl lg:max-w-5xl mb-8 sm:mb-0">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 drop-shadow-lg leading-tight">
                   {book.title}
                 </h1>

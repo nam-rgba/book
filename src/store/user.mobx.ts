@@ -69,6 +69,7 @@ class UserStore {
 
     clearUser() {
         this.user = null;
+        this.isLoggedIn = false;
         console.log("User data cleared");
     }
 }
