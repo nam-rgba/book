@@ -3,7 +3,7 @@ import { getDetail } from "../api/detail";
 import type { Data } from "../api/detail";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Image } from "antd";
+import { Image, Alert } from "antd";
 import { toVND } from "../utils/toVND";
 import calSale from "../utils/calSale";
 import Lorem from "../utils/lorem";
@@ -16,6 +16,8 @@ const Home = observer(() => {
   const [data, setData] = useState<Data | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedImage, setSelectedImage] = useState<number>(0);
+
+  const [alert, setAlert] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchDetail = async () => {
@@ -45,7 +47,7 @@ const Home = observer(() => {
   }
 
   return (
-    <div className="w-full h-full flex flex-col  bg-gray-100">
+    <div className="w-full h-full flex flex-col ">
       <Header />
       <div className="bg-white flex flex-row items-center justify-around py-8 px-20">
         <div className="flex flex-col items-center justify-center">
@@ -71,7 +73,7 @@ const Home = observer(() => {
             ))}
           </div>
         </div>
-        <div className="flex flex-col items-start w-105">
+        <div className="flex flex-col items-start w-105 h-full">
           <div className="text-left text-green-600 mb-2">
             <span className="text-sm font-semibold">Sách self help</span>
           </div>
@@ -94,7 +96,7 @@ const Home = observer(() => {
               {toVND(data?.unitPrice || 0)}{" "}
             </span>
           </div>
-          <button 
+          <button
             onClick={() => {
               cartStore.addToCart({
                 id: data?.id || 0,
@@ -103,12 +105,24 @@ const Home = observer(() => {
                 price: data?.finalPrice || 0,
                 quantity: 1,
               });
+              setAlert(true);
             }}
-          className="bg-lime-500 text-white px-6 py-2  transition-colors shadow-lime-500 shadow-lg hover:bg-lime-600  focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-opacity-50">
+            className="bg-lime-500 text-white px-6 py-2  transition-colors shadow-lime-500 shadow-lg hover:bg-lime-600  focus:outline-none focus:ring-2 focus:ring-lime-400 focus:ring-opacity-50"
+          >
             Add to Cart
           </button>
         </div>
       </div>
+      {alert && (
+        <Alert
+          message="Thêm vào giỏ hàng thành công"
+          type="success"
+          showIcon
+          closable
+          onClose={() => setAlert(false)}
+          className="fixed bottom-1 left-[72%] w-[400px] z-50 bg-white mt-10"
+        />
+      )}
     </div>
   );
 });

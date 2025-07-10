@@ -15,9 +15,7 @@ const items: MenuItem[] = [
   { key: "116", label: "Sách kinh điển" },
   { key: "114", label: "Sách yêu thích" },
   { key: "99", label: "Sách Hay" },
-  { key: "sale", label: "On Sale" },
-  { key: "best", label: "Best Seller" },
-  { key: "new", label: "New Arrival" },
+
 ];
 
 const Products = () => {

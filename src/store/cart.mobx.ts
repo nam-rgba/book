@@ -23,7 +23,12 @@ class CartStore{
     }
     
     addToCart(item: CartItem) {
-        this.cartItems.push(item);
+        const existingItem = this.cartItems.find(i => i.id === item.id);
+        if (existingItem) {
+            existingItem.quantity += item.quantity;
+        }else{
+            this.cartItems.push({ ...item, quantity: item.quantity || 1 });
+        }
     }
     
     removeFromCart(itemId: number) {

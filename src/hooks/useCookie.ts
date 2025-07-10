@@ -22,7 +22,12 @@ const useCookie = (cookieName: string) => {
     document.cookie = cookieName + "=" + value + expires + "; path=/";
   };
 
-  return { getCookie, setCookie };
+  // Clear the cookie
+  const clearCookie = () => {
+    document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+  };
+
+  return { getCookie, setCookie, clearCookie };
 }
 
 export default useCookie;

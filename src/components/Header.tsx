@@ -17,6 +17,9 @@ import { cartStore } from "../store/cart.mobx";
 import logout from "../auth/logout";
 import logo from "../assets/landing/logo.jfif"; 
 import {Modal} from "antd";
+import Search from "./Search";
+
+import useCookie from "../hooks/useCookie";
 
 interface HeaderProps {
   wishlistCount?: number;
@@ -35,6 +38,8 @@ const Header = observer(
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
+    const {clearCookie} = useCookie("access_token");
+
     const handleSearch = (e: React.FormEvent) => {
       e.preventDefault();
       if (searchQuery.trim()) {
@@ -51,6 +56,7 @@ const Header = observer(
       setIsModalOpen(false);
       logout();
       userStore.clearUser();
+      clearCookie(); // Clear the cookie
       navigate("/");
     };
 
@@ -94,24 +100,9 @@ const Header = observer(
               />
             </Link>
 
-            {/* Search bar - Desktop */}
-            <div className="hidden md:flex flex-1 max-w-2xl mx-8">
-              <form onSubmit={handleSearch} className="flex w-full">
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 px-4 py-2 border border-gray-300 rounded-l-[999px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-blue-400 text-white rounded-r-[999px] hover:bg-blue-500 transition-colors duration-200"
-                >
-                  <FaSearch />
-                </button>
-              </form>
-            </div>
+            {/* Search bar */}
+            <Search />
+
 
             {/* Right side icons */}
             <div className="flex items-center space-x-4">
@@ -179,12 +170,7 @@ const Header = observer(
                           >
                             My Profile
                           </Link>
-                          <Link
-                            to="/orders"
-                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                          >
-                            My Orders
-                          </Link>
+
                           <Link
                             to="/settings"
                             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -262,25 +248,25 @@ const Header = observer(
                 All Products
               </Link>
               <Link
-                to="/categories/electronics"
+                to="/products"
                 className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Sách đang sale
               </Link>
               <Link
-                to="/categories/clothing"
+                to="/products"
                 className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Kinh điển
               </Link>
               <Link
-                to="/categories/home"
+                to="/products"
                 className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Sách giáo khoa
               </Link>
               <Link
-                to="/categories/sports"
+                to="/products"
                 className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Truyện tranh

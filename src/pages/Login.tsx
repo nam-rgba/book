@@ -94,7 +94,7 @@ const Login = () => {
       </Modal>
 
       {/* Banner section */}
-      <div className="w-[60%] h-full bg-[#eff5ff] flex flex-col items-center justify-center relative">
+      <div className=" hidden md:flex w-0 sm:w-[60%] h-full bg-[#eff5ff]  flex-col items-center justify-center relative">
         <div className="w-[131px] h-[44px] top-[64px] left-[64px] absolute">
           <img src={Logo} alt="logo" className="w-full" />
         </div>
@@ -105,7 +105,7 @@ const Login = () => {
       </div>
 
       {/* Login section */}
-      <div className="w-[40%] h-full bg-[#fff] flex items-center justify-center py-16 px-16">
+      <div className="w-full sm:w-[40%] h-full bg-[#fff] flex items-center justify-center py-16 px-2 md:px-16">
         {/* after padding */}
         <div className=" h-full w-full flex flex-col gap-6 justify-between ">
           {/* language */}
@@ -129,13 +129,13 @@ const Login = () => {
           <div className="w-full  bg-white flex flex-col gap-6 px-10">
             {/* welcome */}
             <div className="text-left h-9 flex flex-col items-start justify-center gap-2 mb-4">
-              <div className="font-semibold font-sans text-[30px] text-[##2A3547] leading-[120%]">
+              <div className="font-semibold font-sans md:text-[30px] text-[20px] text-[##2A3547] leading-[120%]">
                 {language === "vi"
                   ? "Chào mừng bạn đến với RIVI"
                   : "Welcome to RIVI"}
               </div>
               <div>
-                <span className="text-[16px] font-bold  text-[#5A6A85] leading-[120%]">
+                <span className="md:text-[16px] text-[14px] font-bold  text-[#5A6A85] leading-[120%]">
                   {language === "vi"
                     ? "Vui lòng đăng nhập để sử dụng dịch vụ của chúng tôi"
                     : "Please login to continue using our services"}
@@ -272,7 +272,7 @@ const Login = () => {
         </div>
       </div>
 
-      <div className="bottom-12 left-16 absolute weight-400 text-[14px] text-[##5D6A83]">
+      <div className="hidden sm:block  sm:bottom-12 left-16 absolute weight-400 text-[14px] text-[##5D6A83]">
         @ 2025 RIVI. All Right Reserved.
       </div>
     </div>

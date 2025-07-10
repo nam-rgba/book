@@ -11,6 +11,7 @@ import Delivery from "./pages/Order/Delivery";
 import Review from "./pages/Order/Review";
 import Checkout from "./pages/Order/Checkout";
 import Profile from "./pages/Profile";
+import ProtectedRoutes from "./pages/ProtectedRoutes";
 
 
 function App() {
@@ -25,12 +26,15 @@ function App() {
         <Route path="/detail/:id" element={<Detail  />} />
         <Route path="/products" element={<Products />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/order" element={<Order />} >
-          <Route path="cart-confirm" element={<CartConfirm />} />
-          <Route path="delivery" element={<Delivery />} />
-          <Route path="review" element={<Review />} />
-          <Route path="checkout" element={<Checkout />} />
-        </Route>
+        
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/order" element={<Order />}>
+            <Route path="cart-confirm" element={<CartConfirm />} />
+            <Route path="delivery" element={<Delivery />} />
+            <Route path="review" element={<Review />} />
+            <Route path="checkout" element={<Checkout />} />
+            </Route>
+          </Route>
       </Routes>
     </BrowserRouter>
   )

@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import useLocalStorage from "../hooks/useLocalStorage";
 import register from "../auth/register"; // Assuming you have a register function in utils
 import passwordCheck from "../utils/passwordCheck";
+import isValidEmail from "../utils/isEmailValid";
 
 const Register = () => {
   // Using local storage to manage language preference
@@ -36,6 +37,12 @@ const Register = () => {
     // validate inputs
     if (!phone || !password || !email || !name) {
       setSignUpError("Please fill in all required fields.");
+      return;
+    }
+
+    // check email format
+    if (!isValidEmail(email)) {
+      setSignUpError("Invalid email format.");
       return;
     }
 
@@ -106,9 +113,9 @@ const Register = () => {
           {/* main */}
           <div className="w-[450px] h-[500px] bg-white flex flex-col gap-6">
             {/* logo */}
-            <div className="w-full h-[60px] flex items-center justify-center my-4">
+            <Link to={"/"} className="w-full h-[60px] flex items-center justify-center my-4">
               <img src={Logo} alt="logo" className="w-[131px] h-[44px]" />
-            </div>
+            </Link>
 
             {/* welcome */}
             <div className="text-left h-9 flex flex-col items-start justify-center gap-2 mb-4">
@@ -225,8 +232,8 @@ const Register = () => {
 
             {/* Error message */}
             {signUpError && (
-              <div className="text-red-600 text-center">
-                <span className="text-[16px] font-bold">
+              <div className="text-red-600 text-left">
+                <span className="text-[16px]">
                   {signUpError || "Login failed. Please try again."}
                 </span>
               </div>

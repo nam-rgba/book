@@ -1,0 +1,11 @@
+@import './btn.scss';
+
+.btnPrimary {
+    @extend %base_bnt;
+    background-color: $bmd-color;
+    color: #fff;
+    border: none;
+    &:hover {
+        background-color: darken($bmd-color, 10%);
+    }
+}

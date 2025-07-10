@@ -1,0 +1,17 @@
+@import "./variable.scss";
+
+%base_bnt{
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-weight: 500;
+}
+
+.btn-primary {
+    @extend %base_bnt;
+    background-color: $bmd-color;
+    color: #fff;
+    border: none;
+    &:hover {
+        background-color: darken($bmd-color, 10%);
+    }
+}

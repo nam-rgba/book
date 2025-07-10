@@ -1,7 +1,11 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaPlus, FaMinus, FaTrash, FaShoppingBag } from "react-icons/fa";
 import type { CartItem } from "../store/cart.mobx";
 import { observer } from "mobx-react-lite";
+import style from "../scss/Card.module.scss"; // Assuming you have a CSS module for styles
+import useCookie from "../hooks/useCookie";
+import { useState } from "react";
+import { Modal } from "antd";
 
 interface CartDropdownProps {
   cartItems: CartItem[];
@@ -13,7 +17,13 @@ interface CartDropdownProps {
 
 const CartDropdown = observer(
      ({cartItems,isVisible,onUpdateQuantity,onRemoveItem,className = ""}: CartDropdownProps) => {
-  // Calculate total price
+  
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+  const {getCookie} = useCookie("access_token");
+  
+  
+      // Calculate total price
   const totalPrice = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
     0
@@ -26,6 +36,15 @@ const CartDropdown = observer(
       currency: "VND",
     }).format(price);
   };
+
+  // handle click checkout
+  const handleCheckout = () =>{
+    if(!getCookie()){
+      setModalOpen(true);
+    }else{
+      navigate("/order/cart-confirm");
+    }
+  }
 
   const handleQuantityChange = (id: number, newQuantity: number) => {
     if (newQuantity <= 0) {
@@ -41,6 +60,23 @@ const CartDropdown = observer(
     <div
       className={`absolute right-0 top-6 mt-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 z-50 ${className}`}
     >
+        {/* modal */}
+      <Modal open={modalOpen} onCancel={() => setModalOpen(false)}
+        onOk={() => {
+          setModalOpen(false);
+          navigate("/login"); // Redirect to login page
+        }}
+        title="Login Required"
+        okText="Login"
+        cancelText="Later"
+        
+        okType="danger"
+        >
+          You need to log in to proceed with checkout. Do you want to log in now?
+
+      </Modal>
+
+
       {/* Header */}
       <div className="px-4 py-3 border-b border-gray-200">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
@@ -142,19 +178,14 @@ const CartDropdown = observer(
           </div>
 
           {/* Action Buttons */}
-          <div className="flex space-x-2">
-            <Link
-              to="/cart"
-              className="flex-1 px-3 py-2 text-center text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
-            >
-              View Cart
-            </Link>
-            <Link
-              to="/order/cart-confirm"
-              className="flex-1 px-3 py-2 text-center text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors"
+          <div className="flex space-x-2  w-1/3 ">
+  
+            <button
+              onClick={handleCheckout}
+              className={style.btnPrimary}
             >
               Checkout
-            </Link>
+            </button>
           </div>
 
           {/* Free shipping notice */}

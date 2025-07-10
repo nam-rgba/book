@@ -16,6 +16,7 @@ import {
   FaDownload,
 } from "react-icons/fa";
 import { toVND } from "../utils/toVND";
+import {formatPhone} from "../utils/formatPhone";
 
 interface Order {
   id: string;
@@ -39,14 +40,14 @@ const Profile = observer(() => {
   const [userData, setUserData] = useState({
     fullName: userStore.user?.fullName || "John Doe",
     email: userStore.user?.email || "john.doe@example.com",
-    phone: userStore.user?.phone || "+84 123 456 789",
+    phone: userStore.user?.phone || "+84386379000",
     address:
       userStore.user?.address ||
-      "123 Main Street, District 1, Ho Chi Minh City",
+      "19 Nguyen Huu Tho, Q7",
     avatar: userStore.user?.avatar || "/api/placeholder/150/150",
-    joinDate: "January 2024",
     totalOrders: 0,
     totalSpent: 0,
+    joinDate: new Date().toLocaleDateString("vi-VN"),
   });
 
   useEffect(() => {
@@ -68,6 +69,9 @@ const Profile = observer(() => {
               phone: user.phone || prev.phone,
               address: user.address || prev.address,
               avatar: user.avatar || prev.avatar,
+              joinDate: new Date(
+                1000 * Number(user.createdAt)
+              ).toLocaleDateString("vi-VN"),
             }));
 
             // Update userStore
@@ -209,7 +213,7 @@ const Profile = observer(() => {
                 </p>
                 <p className="text-gray-600 mb-1 flex items-center justify-center md:justify-start">
                   <FaPhone className="mr-2" />
-                  {userData.phone}
+                  {formatPhone(userData.phone)}
                 </p>
                 <p className="text-gray-500 text-sm flex items-center justify-center md:justify-start">
                   <FaCalendar className="mr-2" />
@@ -350,7 +354,7 @@ const Profile = observer(() => {
                         />
                       ) : (
                         <p className="px-3 py-2 bg-gray-50 rounded-lg">
-                          {userData.phone}
+                          {formatPhone(userData.phone)}
                         </p>
                       )}
                     </div>
@@ -457,7 +461,9 @@ const Profile = observer(() => {
                                 <div>
                                   <p className="font-medium">Date</p>
                                   <p>
-                                    {new Date(order.date).toLocaleDateString()}
+                                    {new Date(
+                                      1000 * Number(order.date)
+                                    ).toLocaleDateString()}
                                   </p>
                                 </div>
                                 <div>
