@@ -33,20 +33,13 @@ interface HeaderProps {
 const Header = observer(
   ({ wishlistCount = 0 }: HeaderProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const navigate = useNavigate();
 
     const {clearCookie} = useCookie("access_token");
 
-    const handleSearch = (e: React.FormEvent) => {
-      e.preventDefault();
-      if (searchQuery.trim()) {
-        // Navigate to search results page
-        navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
-      }
-    };
+
 
     const toggleMenu = () => {
       setIsMenuOpen(!isMenuOpen);
@@ -129,7 +122,7 @@ const Header = observer(
               {/* Shopping Cart */}
               <div className="relative">
                 <div
-                  className="relative p-2 text-blue-400 transition-colors flex items-center justify-center cursor-pointer"
+                  className="relative p-2 text-java-500 transition-colors flex items-center justify-center cursor-pointer"
                   onMouseEnter={() => setIsCartOpen(true)}
                   onMouseLeave={() => setIsCartOpen(false)}
                 >
@@ -157,7 +150,7 @@ const Header = observer(
                 {userStore.isLoggedIn ? (
                   <div className="flex items-end space-x-2">
                     <div className="relative group">
-                      <button className="bg-lime-600 text-white flex flex-row items-end space-x-1 p-2 shadow-md rounded hover:bg-lime-700 transition-colors">
+                      <button className="bg-java-500 text-white flex flex-row items-end space-x-1 p-2 shadow-md rounded hover:bg-java-600 transition-colors">
                         <FaCircleUser  size={24} color="#fff"  className="mr-2"/>
                         {userStore.user?.fullName.toUpperCase() || "User"}
                       </button>
@@ -210,24 +203,7 @@ const Header = observer(
             </div>
           </div>
 
-          {/* Mobile search bar */}
-          <div className="md:hidden mt-4">
-            <form onSubmit={handleSearch} className="flex">
-              <input
-                type="text"
-                placeholder="Search products..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-1 px-4 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-              <button
-                type="submit"
-                className="px-6 py-2 bg-blue-600 text-white rounded-r-lg hover:bg-blue-700"
-              >
-                <FaSearch />
-              </button>
-            </form>
-          </div>
+
         </div>
 
         {/* Navigation Menu */}
@@ -237,104 +213,49 @@ const Header = observer(
             <div className="hidden md:flex items-center justify-center space-x-8 ">
               <Link
                 to="/"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Home
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 All Products
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Sách đang sale
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Kinh điển
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Sách giáo khoa
               </Link>
               <Link
                 to="/products"
-                className="text-gray-700 hover:bg-blue-400 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
+                className="text-gray-700 hover:bg-java-500 p-4 hover:text-white hover:font-semibold font-medium transition-colors"
               >
                 Truyện tranh
               </Link>
               <Link
                 to="/deals"
-                className="text-red-600 hover:text-white hover:bg-[#ef5a60] p-4 font-medium transition-colors"
+                className="text-orange-600 hover:text-white hover:bg-orange-600 p-4 font-medium transition-colors"
               >
                 Special Deals
               </Link>
             </div>
 
-            {/* Mobile Navigation */}
-            {isMenuOpen && (
-              <div className="md:hidden py-4 border-t">
-                <div className="flex flex-col space-y-3">
-                  <Link
-                    to="/"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    All Products
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Sách đang sale
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Sách giáo khoa
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Sách kinh điển
-                  </Link>
-                  <Link
-                    to="/products"
-                    className="text-gray-700 hover:text-blue-600 font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Truyện tranh
-                  </Link>
-                  <Link
-                    to="/deals"
-                    className="text-red-600 hover:text-white hover:bg-[#ef5a60] font-medium py-2"
-                    onClick={() => setIsMenuOpen(false)}
-                  >
-                    Special Deals
-                  </Link>
-                </div>
-              </div>
-            )}
+
           </div>
         </nav>
       </header>

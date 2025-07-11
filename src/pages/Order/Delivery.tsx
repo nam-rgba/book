@@ -135,7 +135,7 @@ const Delivery = observer(() => {
         <div className="lg:col-span-2 w-full lg:w-3/4">
           <div className="bg-white border border-gray-200 rounded-lg p-6 mr-8">
             <h3 className="text-xl font-semibold text-gray-900 mb-6 flex items-center">
-              <FaUser className="mr-3 text-blue-600" />
+              <FaUser className="mr-3 text-java-500" />
               Receiver Information
             </h3>
 
@@ -237,12 +237,20 @@ const Delivery = observer(() => {
                     </div>
                     <Select
                       id="city"
-                      // value={orderStore.order.cityId}
+                      value={orderStore.order.cityId}
                       onChange={(value) => {
-                        orderStore.setOrder({ cityId: value });
+                        orderStore.setOrder({ 
+                          cityId: value,
+                          districtId: null, // Reset district in store
+                          wardId: null // Reset ward in store
+                        });
                         const code  = parseInt(cities.find((city) => city.id === value)?.code ?? "59") ;
                         console.log("Selected city code:", code);
                         setSelectedCity(code); // Update local state 
+                        setSelectedDistrict(null); // Reset district and ward when city changes
+                        setSelectedWard(null);
+                        setDistricts([]); // Clear districts array
+                        setWards([]); // Clear wards array
                       }}
                       className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Select city/province"
@@ -278,11 +286,16 @@ const Delivery = observer(() => {
                       </div>
                       <Select
                         id="district"
-                        
+                        value={orderStore.order.districtId}
                         onChange={(value) => {
-                          orderStore.setOrder({ districtId: value });
+                          orderStore.setOrder({ 
+                            districtId: value,
+                            wardId: null // Reset ward in store when district changes
+                          });
                           const code = parseInt(districts.find((district) => district.id === value)?.code ?? "1");
                           setSelectedDistrict(code); // Update local state
+                          setSelectedWard(null); // Reset ward when district changes
+                          setWards([]); // Clear wards array
                         }}
                         className="w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         placeholder="Select district"
@@ -322,7 +335,7 @@ const Delivery = observer(() => {
                       </div>
                       <Select
                         id="ward"
-                        
+                        value={orderStore.order.wardId}
                         onChange={(value) => {
                           orderStore.setOrder({ wardId: value });
                           const code = parseInt(wards.find((ward) => ward.id === value)?.code ?? "1");
@@ -396,14 +409,14 @@ const Delivery = observer(() => {
 
               <div className="flex justify-between text-xl font-bold text-gray-900">
                 <span>Total</span>
-                <span className="text-blue-600">{toVND(total)}</span>
+                <span className="text-java-500">{toVND(total)}</span>
               </div>
             </div>
 
             {/* Payment Button */}
             <button
               onClick={handleProceedToPayment}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
+              className="w-full bg-java-500 hover:bg-java-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
             >
               Review your order
             </button>

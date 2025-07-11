@@ -12,6 +12,7 @@ import Review from "./pages/Order/Review";
 import Checkout from "./pages/Order/Checkout";
 import Profile from "./pages/Profile";
 import ProtectedRoutes from "./pages/ProtectedRoutes";
+import DetailOrder from "./pages/DetailOrder";
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/detail/:id" element={<Detail  />} />
         <Route path="/products" element={<Products />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/order/:id" element={<DetailOrder />} />
         
         <Route element={<ProtectedRoutes />}>
           <Route path="/order" element={<Order />}>

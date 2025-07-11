@@ -90,6 +90,9 @@ const Review = observer(() => {
           paymentMethod,
           status,
         });
+
+        // add ship to order
+        orderStore.order.total = moneyProduct + shipFee;
       } catch (error) {
         console.error("Error estimating order:", error);
         const errorMessage =
@@ -128,7 +131,7 @@ const Review = observer(() => {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-96">
-        <FaSpinner className="animate-spin text-4xl text-lime-600" />
+        <FaSpinner className="animate-spin text-4xl text-java-500" />
         <span className="ml-3 text-lg">Loading order details...</span>
       </div>
     );
@@ -159,7 +162,7 @@ const Review = observer(() => {
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 flex items-center">
-          <FaCheckCircle className="mr-3 text-green-600" />
+          <FaCheckCircle className="mr-3 text-java-500" />
           Review Your Order
         </h2>
         <p className="text-gray-600">
@@ -174,12 +177,12 @@ const Review = observer(() => {
           <div className="bg-gray-50 rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-                <FaShoppingCart className="mr-3 text-lime-600" />
+                <FaShoppingCart className="mr-3 text-java-500" />
                 Order Items ({cartStore.cartItems.length})
               </h3>
               <button
                 onClick={() => handleEditStep(0)}
-                className="flex items-center text-amber-600 hover:text-amber-700 font-medium transition-colors"
+                className="flex items-center text-java-500 hover:text-java-500 font-medium transition-colors"
               >
                 <FaEdit className="mr-2" />
                 Edit
@@ -205,7 +208,7 @@ const Review = observer(() => {
                       <span className="text-sm text-gray-600">
                         Số lượng: {item.quantity}
                       </span>
-                      <span className="font-semibold text-lime-600">
+                      <span className="font-semibold text-orange-500">
                         {toVND(item.price * item.quantity)}
                       </span>
                     </div>
@@ -219,12 +222,12 @@ const Review = observer(() => {
           <div className="bg-gray-50 rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-                <FaUser className="mr-3 text-lime-600" />
+                <FaUser className="mr-3 text-java-600" />
                 Delivery Information
               </h3>
               <button
                 onClick={() => handleEditStep(1)}
-                className="flex items-center text-amber-600 hover:text-amber-700 font-medium transition-colors"
+                className="flex items-center text-java-500 hover:text-java-600 font-medium transition-colors"
               >
                 <FaEdit className="mr-2" />
                 Edit
@@ -263,12 +266,12 @@ const Review = observer(() => {
           <div className="bg-gray-50 rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-xl font-semibold text-gray-900 flex items-center">
-                <FaCreditCard className="mr-3 text-lime-600" />
+                <FaCreditCard className="mr-3 text-java-500" />
                 Payment Method
               </h3>
               <button
                 onClick={() => handleEditStep(2)}
-                className="flex items-center text-amber-600 hover:text-amber-700 font-medium transition-colors"
+                className="flex items-center text-java-500 hover:text-java-600 font-medium transition-colors"
               >
                 <FaEdit className="mr-2" />
                 Edit
@@ -330,7 +333,7 @@ const Review = observer(() => {
                 )}
 
                 {money.totalPoints > 0 && (
-                  <div className="flex justify-between text-lime-600">
+                  <div className="flex justify-between text-orange-500">
                     <span>Points Earned</span>
                     <span>{money.totalPoints} pts</span>
                   </div>
@@ -340,7 +343,7 @@ const Review = observer(() => {
 
                 <div className="flex justify-between text-xl font-bold text-gray-900">
                   <span>Total</span>
-                  <span className="text-lime-600">{toVND(money.moneyFinal)}</span>
+                  <span className="text-orange-500">{toVND(money.moneyFinal)}</span>
                 </div>
               </div>
             ) : (
@@ -361,11 +364,11 @@ const Review = observer(() => {
                 />
                 <span className="text-sm text-gray-600">
                   I agree to the{" "}
-                  <a href="#" className="text-amber-600 hover:text-amber-700">
+                  <a href="#" className="text-java-600 hover:text-java-700">
                     Terms and Conditions
                   </a>{" "}
                   and{" "}
-                  <a href="#" className="text-amber-600 hover:text-amber-700">
+                  <a href="#" className="text-java-600 hover:text-java-700">
                     Privacy Policy
                   </a>
                 </span>
@@ -376,7 +379,7 @@ const Review = observer(() => {
             <button
               onClick={handlePlaceOrder}
               disabled={isPlacingOrder || !money || !checked}
-              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4 flex items-center justify-center"
+              className="w-full bg-java-400 hover:bg-java-500 disabled:bg-gray-400 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4 flex items-center justify-center"
             >
               {isPlacingOrder ? (
                 <>

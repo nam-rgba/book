@@ -27,6 +27,7 @@ interface Order {
   items: number;
   paymentMethod: string;
 }
+import { useNavigate } from "react-router-dom";
 
 const Profile = observer(() => {
   const [activeTab, setActiveTab] = useState<"profile" | "orders">("profile");
@@ -35,6 +36,7 @@ const Profile = observer(() => {
   const [isEditing, setIsEditing] = useState(false);
   const [profileError, setProfileError] = useState<string | null>(null);
   const [ordersError, setOrdersError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   // Initialize user data from userStore or with defaults
   const [userData, setUserData] = useState({
@@ -178,8 +180,7 @@ const Profile = observer(() => {
   };
 
   const handleViewOrder = (orderId: string) => {
-    console.log("Viewing order:", orderId);
-    alert("Order details view will be implemented soon!");
+    navigate(`/order/${orderId}`);
   };
 
   return (

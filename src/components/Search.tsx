@@ -44,7 +44,7 @@ const Search = () => {
         />
         <button
           type="submit"
-          className="px-4 py-2 bg-blue-400 text-white rounded-r-[999px] hover:bg-blue-500 transition-colors duration-200"
+          className="px-4 py-2 bg-java-400 text-white rounded-r-[999px] hover:bg-java-500 transition-colors duration-200"
         >
           <FaSearch />
         </button>

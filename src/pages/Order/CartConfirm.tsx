@@ -88,7 +88,7 @@ const CartConfirm: React.FC = observer(() => {
       {/* Header */}
       <div className="mb-8">
         <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 flex items-center">
-          <FaShoppingCart className="mr-3 text-blue-600" />
+          <FaShoppingCart className="mr-3 text-java-500" />
           Order Confirmation
         </h2>
         <p className="text-gray-600">
@@ -107,7 +107,7 @@ const CartConfirm: React.FC = observer(() => {
               </h3>
               <button
                 onClick={handleBackToProduct}
-                className="flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                className="flex items-center text-java-500 hover:text-java-600 font-medium transition-colors"
               >
                 <FaEdit className="mr-2" />
                 Edit Cart
@@ -213,14 +213,14 @@ const CartConfirm: React.FC = observer(() => {
 
               <div className="flex justify-between text-xl font-bold text-gray-900">
                 <span>Total</span>
-                <span className="text-blue-600">{toVND(total)}</span>
+                <span className="text-java-500">{toVND(total)}</span>
               </div>
             </div>
 
             {/* Payment Button */}
             <button
               onClick={handleProceedToPayment}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
+              className="w-full bg-java-500 hover:bg-java-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200 mb-4"
             >
               Add addtional information
             </button>
@@ -232,13 +232,7 @@ const CartConfirm: React.FC = observer(() => {
               Explore more products
             </button>
 
-            {/* Security Badge */}
-            <div className="mt-6 text-center">
-              <div className="flex items-center justify-center text-sm text-gray-500">
-                <span className="mr-2">🔒</span>
-                <span>Secure SSL Encryption</span>
-              </div>
-            </div>
+
           </div>
         </div>
       </div>

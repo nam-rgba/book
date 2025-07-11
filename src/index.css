@@ -15,6 +15,58 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@theme {
+  --color-java-50: #effcfc;
+  --color-java-100: #d7f6f6;
+  --color-java-200: #b4eded;
+  --color-java-300: #7fdfe1;
+  --color-java-400: #3ac5c9;
+  --color-java-500: #29acb1;
+  --color-java-600: #258c95;
+  --color-java-700: #24717a;
+  --color-java-800: #255d65;
+  --color-java-900: #234d56;
+  --color-java-950: #12333a;
+
+  --color-orange-50: #fef6ee;
+  --color-orange-100: #fdebd7;
+  --color-orange-200: #fad3ae;
+  --color-orange-300: #f6b47b;
+  --color-orange-400: #f18a46;
+  --color-orange-500: #ee6f28;
+  --color-orange-600: #df5217;
+  --color-orange-700: #b93d15;
+  --color-orange-800: #933119;
+  --color-orange-900: #772b17;
+  --color-orange-950: #40130a;
+
+  --color-big-stone-50: #f2f7fd;
+  --color-big-stone-100: #e5eef9;
+  --color-big-stone-200: #c5ddf2;
+  --color-big-stone-300: #91c0e8;
+  --color-big-stone-400: #579fd9;
+  --color-big-stone-500: #3183c6;
+  --color-big-stone-600: #2267a7;
+  --color-big-stone-700: #1c5388;
+  --color-big-stone-800: #1b4771;
+  --color-big-stone-900: #1c3d5e;
+  --color-big-stone-950: #152c47;
+
+  --color-royal-blue-50: #eef3ff;
+  --color-royal-blue-100: #e0e9ff;
+  --color-royal-blue-200: #c6d6ff;
+  --color-royal-blue-300: #a4b9fd;
+  --color-royal-blue-400: #8093f9;
+  --color-royal-blue-500: #5865f2;
+  --color-royal-blue-600: #4445e7;
+  --color-royal-blue-700: #3836cc;
+  --color-royal-blue-800: #2f2fa4;
+  --color-royal-blue-900: #2d2f82;
+  --color-royal-blue-950: #1a1a4c;
+
+
+}
+
 
 
 body {

@@ -40,7 +40,7 @@ const Landing = () => {
       setCurrentIndex((prevIndex) =>
         prevIndex === books.length - 1 ? 0 : prevIndex + 1
       );
-    }, 5000); // Change slide every 5 seconds
+    }, 3500); 
 
     return () => clearInterval(interval);
   }, [isAutoPlay]);
@@ -84,7 +84,7 @@ const Landing = () => {
     }
   };
 
-  // Mouse handlers for auto-play
+  // Mouse handlers for auto-play, ì over do not chage slide
   const handleMouseEnter = () => {
     setIsAutoPlay(false);
   };
@@ -120,7 +120,7 @@ const Landing = () => {
             {/* Content Overlay */}
             <div className="relative z-10 h-full flex flex-col sm:flex-row items-center justify-center sm:justify-around px-4 sm:px-8 lg:px-16">
               {/* Text Content */}
-              <div className="text-center w-[60%] pl-38 px-8 sm:text-left text-white sm:text-[#5A6A85] max-w-full sm:max-w-2xl lg:max-w-5xl mb-8 sm:mb-0">
+              <div className="text-center w-[60%] pl-38 px-8 sm:text-left text-white sm:text-big-stone-950 max-w-full sm:max-w-2xl lg:max-w-5xl mb-8 sm:mb-0">
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-4 sm:mb-6 drop-shadow-lg leading-tight">
                   {book.title}
                 </h1>
@@ -128,7 +128,7 @@ const Landing = () => {
                   {book.sale}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center sm:justify-start">
-                  <button className="bg-blue-500 hover:bg-blue-600 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold transition-all duration-200 rounded-md sm:rounded-none">
+                  <button className="bg-orange-500 hover:bg-white hover:text-orange-500 shadow-[4.0px_8.0px_8.0px_rgba(0,0,0,0.38)] text-white px-6 sm:px-8 py-3 sm:py-4 font-semibold transition-all duration-200 rounded-md sm:rounded-none">
                     <Link to={`/detail/${book.id}`} className="block w-full h-full">
                       Xem chi tiết
                     </Link>

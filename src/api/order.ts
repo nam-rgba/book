@@ -49,4 +49,14 @@ const getOrders = async () => {
     }
 }
 
-export { createOrder, getOrders };
+const getOrderById = async (id: string) => {
+    try {
+        const response = await api.get(`/order/${id}`);
+        return response.data;
+    } catch (error) {
+        console.error("Error fetching order by ID:", error);
+        throw error;
+    }
+}
+
+export { createOrder, getOrders, getOrderById };

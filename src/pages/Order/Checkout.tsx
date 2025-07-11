@@ -2,7 +2,7 @@ import { createOrder } from "../../api/order"
 import { observer } from "mobx-react-lite"
 import { orderStore } from "../../store/order.mobx";
 import { cartStore } from "../../store/cart.mobx";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import { FaCheckCircle, FaSpinner, FaHome, FaShoppingBag, FaCopy, FaShare } from "react-icons/fa";
 import { toVND } from "../../utils/toVND";
@@ -28,10 +28,17 @@ const Checkout = observer(() => {
     const [orderData, setOrderData] = useState<OrderData | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+    const hasCreatedOrder = useRef(false);
 
     useEffect(() => {
         const createOrderAsync = async () => {
+            // Prevent duplicate API calls
+            if (hasCreatedOrder.current) {
+                return;
+            }
+            
             try {
+                hasCreatedOrder.current = true;
                 setIsLoading(true);
                 setError(null);
                 
@@ -46,7 +53,7 @@ const Checkout = observer(() => {
                 const transformedData: OrderData = {
                     id: response.data?.id || Math.random().toString(36).substr(2, 9),
                     orderNumber: response.data?.code || `BMD${Date.now()}`,
-                    total: response.data?.total || cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                    total: response.data?.moneyFinal || cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0),
                     status: response.data?.status || 'confirmed',
                     estimatedDelivery: response.data?.estimatedDelivery || new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toLocaleDateString(),
                     paymentMethod: response.data?.paymentMethod || orderDetails.paymentMethod || 'Credit Card'
@@ -61,6 +68,7 @@ const Checkout = observer(() => {
             } catch (error) {
                 console.error("Error creating order:", error);
                 setError(error instanceof Error ? error.message : 'Failed to create order');
+                hasCreatedOrder.current = false; // Reset flag on error to allow retry
             } finally {
                 setIsLoading(false);
             }

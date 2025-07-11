@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaPlus, FaMinus, FaTrash, FaShoppingBag } from "react-icons/fa";
 import type { CartItem } from "../store/cart.mobx";
 import { observer } from "mobx-react-lite";
-import style from "../scss/Card.module.scss"; // Assuming you have a CSS module for styles
 import useCookie from "../hooks/useCookie";
 import { useState } from "react";
 import { Modal } from "antd";
@@ -182,7 +181,7 @@ const CartDropdown = observer(
   
             <button
               onClick={handleCheckout}
-              className={style.btnPrimary}
+              
             >
               Checkout
             </button>

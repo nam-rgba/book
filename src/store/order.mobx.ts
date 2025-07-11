@@ -16,6 +16,8 @@ export interface Order {
     cityId: number | null; 
     districtId: number | null;
     wardId: number | null;
+    total: number; // Added total field to Order
+    
 }
 
 export interface ProgressStep {
@@ -36,6 +38,7 @@ class OrderStore {
         cityId: null,
         districtId: null,
         wardId: null,
+        total: 0, // Added total field to Order
     };
 
     progressStep: ProgressStep = { current: 0 };
@@ -71,6 +74,7 @@ class OrderStore {
             cityId: null,
             districtId: null,
             wardId: null,
+            total: 0, // Reset total to 0
         };
         this.progressStep.current = 0;
     }
